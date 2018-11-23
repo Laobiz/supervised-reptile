@@ -10,6 +10,7 @@ from supervised_reptile.args import argument_parser, model_kwargs, train_kwargs,
 from supervised_reptile.eval import evaluate
 from supervised_reptile.models import OmniglotModel, CuneiformModel
 from supervised_reptile.omniglot import read_dataset, split_dataset, augment_dataset
+import supervised_reptile.cuneiform as cuneiform
 from supervised_reptile.train import train
 
 DATA_DIR_TRAIN = 'data/omniglot'
@@ -28,7 +29,7 @@ def main():
     test_set = list(test_set)
 
     #for evaluation
-    train_eval, test_eval = split_dataset(read_dataset(DATA_DIR_TEST))
+    train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST))
     train_eval = list(augment_dataset(train_eval))
     test_eval = list(test_eval)
 
@@ -46,8 +47,8 @@ def main():
 
         print('Evaluating...')
         eval_kwargs = evaluate_kwargs(args)
-        print('Train accuracy: ' + str(evaluate(sess, model_test, train_set, **eval_kwargs)))
-        print('Test accuracy: ' + str(evaluate(sess, model_test, test_set, **eval_kwargs)))
+        print('Train accuracy: ' + str(evaluate(sess, model_test, train_eval, **eval_kwargs)))
+        print('Test accuracy: ' + str(evaluate(sess, model_test, test_eval, **eval_kwargs)))
 
 if __name__ == '__main__':
     main()
