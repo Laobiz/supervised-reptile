@@ -50,6 +50,7 @@ class MiniImageNetModel:
         self.predictions = tf.argmax(self.logits, axis=-1)
         self.minimize_op = optimizer(**optim_kwargs).minimize(self.loss)
 
+# pylint: disable=R0903
 class CuneiformModel:
     """
         A model for Cuneiform classification.

@@ -35,7 +35,7 @@ def main():
 
     model_train = OmniglotModel(args.classes, **model_kwargs(args))
 
-    model_test = CuneiformModel
+    model_test = CuneiformModel(7, **model_kwargs(args))
 
     with tf.Session() as sess:
         if not args.pretrained:

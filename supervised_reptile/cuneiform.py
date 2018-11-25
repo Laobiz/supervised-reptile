@@ -18,8 +18,7 @@ def read_dataset(data_dir):
     training and test sets.
     """
     for char_name in sorted(os.listdir(data_dir)):
-        if not char_name.startswith('character'):
-            continue
+        test = 0
         yield Character(os.path.join(data_dir, char_name), 0)
 
 # pylint: disable=R0903
