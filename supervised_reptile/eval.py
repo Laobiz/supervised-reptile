@@ -21,11 +21,14 @@ def evaluate(sess,
     """
     Evaluate a model on a dataset.
     """
+    print(num_samples)
     reptile = reptile_fn(sess,
                          transductive=transductive,
                          pre_step_op=weight_decay(weight_decay_rate))
     total_correct = 0
-    for _ in range(num_samples):
+    print("reptile_fn works")
+    for i in range(num_samples):
+        print(i)
         total_correct += reptile.evaluate(dataset, model.input_ph, model.label_ph,
                                           model.minimize_op, model.predictions,
                                           num_classes=num_classes, num_shots=num_shots,

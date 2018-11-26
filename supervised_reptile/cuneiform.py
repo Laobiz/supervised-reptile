@@ -18,7 +18,6 @@ def read_dataset(data_dir):
     training and test sets.
     """
     for char_name in sorted(os.listdir(data_dir)):
-        test = 0
         yield Character(os.path.join(data_dir, char_name), 0)
 
 # pylint: disable=R0903
@@ -50,6 +49,6 @@ class Character:
         if path in self._cache:
             return self._cache[path]
         with open(path, 'rb') as in_file:
-            img = Image.open(in_file).resize((28, 28)).rotate(self.rotation)
+            img = Image.open(in_file).resize((28, 28)).rotate(self.rotation).convert(mode = 'L')
             self._cache[path] = np.array(img).astype('float32')
             return self._cache[path]

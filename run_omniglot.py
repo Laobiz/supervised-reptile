@@ -29,7 +29,7 @@ def main():
     test_set = list(test_set)
 
     #for evaluation
-    train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST))
+    train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST), 5)
     train_eval = list(augment_dataset(train_eval))
     test_eval = list(test_eval)
 
@@ -46,7 +46,7 @@ def main():
             tf.train.Saver().restore(sess, tf.train.latest_checkpoint(args.checkpoint))
 
         print('Evaluating...')
-        eval_kwargs = evaluate_kwargs(args)
+        eval_kwargs = evaluate_kwargs(args)#runs through
         print('Train accuracy: ' + str(evaluate(sess, model_test, train_eval, **eval_kwargs)))
         print('Test accuracy: ' + str(evaluate(sess, model_test, test_eval, **eval_kwargs)))
 
