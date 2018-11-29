@@ -67,9 +67,10 @@ class Character:
     """
     A single character class.
     """
-    def __init__(self, dir_path, rotation=0):
+    def __init__(self, dir_path, rotation=0, blur=False ):
         self.dir_path = dir_path
         self.rotation = rotation
+        self.blur = blur
         self._cache = {}
 
     def sample(self, num_images):

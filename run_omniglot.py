@@ -12,11 +12,14 @@ from supervised_reptile.models import OmniglotModel, CuneiformModel
 from supervised_reptile.omniglot import read_dataset, split_dataset, augment_dataset
 import supervised_reptile.cuneiform as cuneiform
 from supervised_reptile.train import train
+import os
 
 DATA_DIR_TRAIN = 'data/omniglot'
 DATA_DIR_TEST = 'data/cuneiform'
 
 def main():
+    #use only one gpu
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     """
     Load data and train a model on it.
     """
@@ -30,7 +33,8 @@ def main():
 
     #for evaluation
     train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST), 5)
-    train_eval = list(augment_dataset(train_eval))
+    #train_eval = list(augment_dataset(train_eval))
+    train_eval = list(train_eval)
     test_eval = list(test_eval)
 
     model_train = OmniglotModel(args.classes, **model_kwargs(args))
@@ -40,7 +44,7 @@ def main():
     with tf.Session() as sess:
         if not args.pretrained:
             print('Training...')
-            train(sess, model_train, train_set, test_set, args.checkpoint, **train_kwargs(args))
+            train(sess, model_test, train_eval, test_eval, args.checkpoint, **train_kwargs(args))
         else:
             print('Restoring from checkpoint...')
             tf.train.Saver().restore(sess, tf.train.latest_checkpoint(args.checkpoint))
