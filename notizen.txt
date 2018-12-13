@@ -1,0 +1,4 @@
+29.11.18:
+    Bei vielen Durchläufen kein besseres Ergebnis. Evtl Lernrate?
+    Mit Dense Netzwerk keine besseren Ergebnisse
+    wahrscheinlich bessere Performance ohne Convolutional

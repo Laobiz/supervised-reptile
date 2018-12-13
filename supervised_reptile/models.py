@@ -59,10 +59,18 @@ class CuneiformModel:
     def __init__(self, num_classes, optimizer=DEFAULT_OPTIMIZER, **optim_kwargs):
         self.input_ph = tf.placeholder(tf.float32, shape=(None, 28, 28))
         out = tf.reshape(self.input_ph, (-1, 28, 28, 1))
-        for _ in range(4):
+        for _ in range(2):
             out = tf.layers.conv2d(out, 64, 3, strides=2, padding='same')
-            out = tf.layers.batch_normalization(out, training=True)
+            #out = tf.layers.batch_normalization(out, training=True)
             out = tf.nn.relu(out)
+        #out = tf.layers.max_pooling2d(out, (2,2), 2, padding='same')
+        for _ in range(2):
+            out = tf.layers.conv2d(out, 128, 3, strides=2, padding='same')
+            #out = tf.layers.batch_normalization(out, training=True)
+            out = tf.nn.relu(out)
+        #out = tf.layers.max_pooling2d(out, (2, 2), 2, padding='same')
+        out = tf.layers.dropout(out, 0.5)
+        out = tf.layers.dense(out, 2048)
         out = tf.reshape(out, (-1, int(np.prod(out.get_shape()[1:]))))
         self.logits = tf.layers.dense(out, num_classes)
         self.label_ph = tf.placeholder(tf.int32, shape=(None,))

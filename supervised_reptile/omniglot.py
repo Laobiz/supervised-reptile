@@ -48,20 +48,6 @@ def split_dataset(dataset, num_train=1200):
     random.shuffle(all_data)
     return all_data[:num_train], all_data[num_train:]
 
-def augment_dataset(dataset):
-    """
-    Augment the dataset by adding 90 degree rotations.
-
-    Args:
-      dataset: an iterable of Characters.
-
-    Returns:
-      An iterable of augmented Characters.
-    """
-    for character in dataset:
-        for rotation in [0, 90, 180, 270]:
-            yield Character(character.dir_path, rotation=rotation)
-
 # pylint: disable=R0903
 class Character:
     """

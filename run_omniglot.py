@@ -9,7 +9,7 @@ import tensorflow as tf
 from supervised_reptile.args import argument_parser, model_kwargs, train_kwargs, evaluate_kwargs
 from supervised_reptile.eval import evaluate
 from supervised_reptile.models import OmniglotModel, CuneiformModel
-from supervised_reptile.omniglot import read_dataset, split_dataset, augment_dataset
+from supervised_reptile.omniglot import read_dataset, split_dataset
 import supervised_reptile.cuneiform as cuneiform
 from supervised_reptile.train import train
 import os
@@ -26,14 +26,8 @@ def main():
     args = argument_parser().parse_args()
     random.seed(args.seed)
 
-    #for training
-    train_set, test_set = split_dataset(read_dataset(DATA_DIR_TRAIN))
-    train_set = list(augment_dataset(train_set))
-    test_set = list(test_set)
-
     #for evaluation
     train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST), 5)
-    #train_eval = list(augment_dataset(train_eval))
     train_eval = list(train_eval)
     test_eval = list(test_eval)
 
