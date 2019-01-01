@@ -33,18 +33,19 @@ def main():
 
     model_train = OmniglotModel(args.classes, **model_kwargs(args))
 
-    model_test = CuneiformModel(7, **model_kwargs(args))
+    model_test = CuneiformModel(3, **model_kwargs(args))
 
     with tf.Session() as sess:
         if not args.pretrained:
             print('Training...')
             train(sess, model_test, train_eval, test_eval, args.checkpoint, **train_kwargs(args))
+            print("after training")
         else:
             print('Restoring from checkpoint...')
             tf.train.Saver().restore(sess, tf.train.latest_checkpoint(args.checkpoint))
 
         print('Evaluating...')
-        eval_kwargs = evaluate_kwargs(args)#runs through
+        eval_kwargs = evaluate_kwargs(args)
         print('Train accuracy: ' + str(evaluate(sess, model_test, train_eval, **eval_kwargs)))
         print('Test accuracy: ' + str(evaluate(sess, model_test, test_eval, **eval_kwargs)))
 
