@@ -14,8 +14,7 @@ import supervised_reptile.cuneiform as cuneiform
 from supervised_reptile.train import train
 import os
 
-DATA_DIR_TRAIN = 'data/omniglot'
-DATA_DIR_TEST = 'data/cuneiform'
+DATA_DIR = 'data/cuneiform'
 
 def main():
     #use only one gpu
@@ -27,11 +26,9 @@ def main():
     random.seed(args.seed)
 
     #for evaluation
-    train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR_TEST), 5)
+    train_eval, test_eval = split_dataset(cuneiform.read_dataset(DATA_DIR), 5)
     train_eval = list(train_eval)
     test_eval = list(test_eval)
-
-    model_train = OmniglotModel(args.classes, **model_kwargs(args))
 
     model_test = CuneiformModel(3, **model_kwargs(args))
 

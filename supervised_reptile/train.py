@@ -58,9 +58,7 @@ def train(sess,
                            inner_batch_size=inner_batch_size, inner_iters=inner_iters,
                            replacement=replacement,
                            meta_step_size=cur_meta_step_size, meta_batch_size=meta_batch_size)
-        print("I am here" + str(meta_iters))
         if i % eval_interval == 0:
-            print("in accuracy calc")
             accuracies = []
             for dataset, writer in [(train_set, train_writer), (test_set, test_writer)]:
                 correct = reptile.evaluate(dataset, model.input_ph, model.label_ph,
@@ -69,16 +67,12 @@ def train(sess,
                                            inner_batch_size=eval_inner_batch_size,
                                            inner_iters=eval_inner_iters, replacement=replacement)
                 summary = sess.run(merged, feed_dict={accuracy_ph: correct/num_classes})
-                print("after eval")
                 writer.add_summary(summary, i)
                 writer.flush()
                 accuracies.append(correct / num_classes)
-                print("after writer add and flush")
+
             log_fn('batch %d: train=%f test=%f' % (i, accuracies[0], accuracies[1]))
-            print("after log_fn")
         if i % 100 == 0 or i == meta_iters-1:
             saver.save(sess, os.path.join(save_dir, 'model.ckpt'), global_step=i)
-            print("after save")
         if time_deadline is not None and time.time() > time_deadline:
-            print("Breaks because time_deadline")
             break

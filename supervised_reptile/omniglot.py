@@ -34,7 +34,7 @@ def read_dataset(data_dir):
                 continue
             yield Character(os.path.join(alphabet_dir, char_name), 0)
 
-def split_dataset(dataset, num_train=1200):
+def split_dataset(dataset, num_train=5):
     """
     Split the dataset into a training and test set.
 
